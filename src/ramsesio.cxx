@@ -51,6 +51,13 @@ int RAMSES_fortran_read(fstream &F, unsigned int *i){
     F.read((char*)&dummy, sizeof(dummy)); byteoffset += sizeof(int);
     return byteoffset;
 }
+int RAMSES_fortran_read(fstream &F, long *i){
+    int dummy,byteoffset=0;
+    F.read((char*)&dummy, sizeof(dummy));byteoffset+=sizeof(int);
+    F.read((char*)i,dummy); byteoffset+=dummy;
+    F.read((char*)&dummy, sizeof(dummy));byteoffset+=sizeof(int);
+    return byteoffset;
+}
 int RAMSES_fortran_read(fstream &F, long long *i){
     int dummy,byteoffset=0;
     F.read((char*)&dummy, sizeof(dummy));byteoffset+=sizeof(int);
@@ -289,9 +296,9 @@ Int_t RAMSES_get_nbodies(char *fname, int ptype, Options &opt)
     getline(Finfo,stringbuf);//a
     getline(Finfo,stringbuf);//hubble
     Finfo>>stringbuf>>stringbuf>>OmegaM;
-    getline(Finfo,stringbuf);
-    getline(Finfo,stringbuf);
-    getline(Finfo,stringbuf);
+    getline(Finfo,stringbuf);//omegal
+    getline(Finfo,stringbuf);//omegak
+    //getline(Finfo,stringbuf);//<<this shouldnt be here
     Finfo>>stringbuf>>stringbuf>>OmegaB;
     Finfo.close();
     dmp_mass = 1.0 / (opt.Neff*opt.Neff*opt.Neff) * (OmegaM - OmegaB) / OmegaM;
@@ -386,6 +393,7 @@ Int_t RAMSES_get_nbodies(char *fname, int ptype, Options &opt)
         ghoststars = 0;
         for (j = 0; j < ramses_header_info.npartlocal; j++)
         {
+            /*
             if (fabs((dummy_mass[j]-dmp_mass)/dmp_mass) < 1e-5)
                 ramses_header_info.npart[RAMSESDMTYPE]++;
             else
@@ -393,6 +401,11 @@ Int_t RAMSES_get_nbodies(char *fname, int ptype, Options &opt)
                     ramses_header_info.npart[RAMSESSTARTYPE]++;
                 else
                 ghoststars++;
+            */
+
+            // This appears to be true for all zoom-sims, ghosts stars seem to be a Horizon-AGN only thing
+            if (dummy_age[j] == 0) ramses_header_info.npart[RAMSESDMTYPE]++;
+            else ramses_header_info.npart[RAMSESSTARTYPE]++;
         }
         delete [] dummy_age;
         delete [] dummy_mass;
@@ -471,7 +484,8 @@ void ReadRamses(Options &opt, vector<Particle> &Part, const Int_t nbodies, Parti
     ///number of particles local to a file are smaller
     Int_t chunksize=RAMSESCHUNKSIZE,nchunk;
     RAMSESFLOAT *xtempchunk, *vtempchunk, *mtempchunk, *sphtempchunk, *agetempchunk, *mettempchunk, *hydrotempchunk;
-    RAMSESIDTYPE *idvalchunk, *levelchunk;
+    RAMSESIDTYPE *idvalchunk;
+    RAMSESINTTYPE *levelchunk;
     int *icellchunk;
 
     Famr       = new fstream[opt.num_files];
@@ -734,13 +748,13 @@ void ReadRamses(Options &opt, vector<Particle> &Part, const Int_t nbodies, Parti
         //data loaded into memory in chunks
         chunksize    = nchunk = header[i].npartlocal;
         ninputoffset = 0;
-        xtempchunk   = new RAMSESFLOAT  [3*chunksize];
-        vtempchunk   = new RAMSESFLOAT  [3*chunksize];
-        mtempchunk   = new RAMSESFLOAT  [chunksize];
-        idvalchunk   = new RAMSESIDTYPE [chunksize];
-        levelchunk   = new RAMSESIDTYPE [chunksize];
-        agetempchunk = new RAMSESFLOAT  [chunksize];
-        mettempchunk = new RAMSESFLOAT  [chunksize];
+        xtempchunk   = new RAMSESFLOAT   [3*chunksize];
+        vtempchunk   = new RAMSESFLOAT   [3*chunksize];
+        mtempchunk   = new RAMSESFLOAT   [chunksize];
+        idvalchunk   = new RAMSESIDTYPE  [chunksize];
+        levelchunk   = new RAMSESINTTYPE [chunksize];
+        agetempchunk = new RAMSESFLOAT   [chunksize];
+        mettempchunk = new RAMSESFLOAT   [chunksize];
 
         for(idim=0;idim<header[ifirstfile].ndim;idim++)
         {
@@ -753,10 +767,11 @@ void ReadRamses(Options &opt, vector<Particle> &Part, const Int_t nbodies, Parti
         RAMSES_fortran_read(Fpartage[i],   agetempchunk);
         RAMSES_fortran_read(Fpartmet[i],   mettempchunk);
 
-        RAMSES_fortran_read(Fpartid[i],idvalchunk);
+        // RAMSES_fortran_read(Fpartid[i],idvalchunk); <-- This shouldnt be here
         for (int nn=0;nn<nchunk;nn++)
         {
-            if (fabs((mtempchunk[nn]-dmp_mass)/dmp_mass) > 1e-5 && (agetempchunk[nn] == 0.0))
+            //if (fabs((mtempchunk[nn]-dmp_mass)/dmp_mass) > 1e-5 && (agetempchunk[nn] == 0.0))
+            if (0)
             {
               //  GHOST PARTIRCLE!!!
             }
@@ -780,8 +795,13 @@ void ReadRamses(Options &opt, vector<Particle> &Part, const Int_t nbodies, Parti
             mtemp=1.0;
 #endif
             ageval = agetempchunk[nn];
+/*
             if (fabs((mtemp-dmp_mass)/dmp_mass) < 1e-5) typeval = DARKTYPE;
             else typeval = STARTYPE;
+*/
+            if (ageval == 0) typeval = DARKTYPE;
+            else typeval = STARTYPE;
+            //cout << count2 << endl;
 /*
             if (ageval==0 && idval>0) typeval=DARKTYPE;
             else if (idval>0) typeval=STARTYPE;
@@ -974,8 +994,8 @@ void ReadRamses(Options &opt, vector<Particle> &Part, const Int_t nbodies, Parti
         delete[] vtempchunk;
         delete[] mtempchunk;
         delete[] idvalchunk;
-        delete[] agetempchunk;
         delete[] levelchunk;
+        delete[] agetempchunk;
         delete[] mettempchunk;
         Fpart[i].close();
         Fpartvel[i].close();
