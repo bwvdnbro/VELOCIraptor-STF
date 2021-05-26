@@ -391,22 +391,21 @@ Int_t RAMSES_get_nbodies(char *fname, int ptype, Options &opt)
         Framses.read((char*)&dummy, sizeof(dummy));
 
         ghoststars = 0;
-        for (j = 0; j < ramses_header_info.npartlocal; j++)
-        {
-            /*
-            if (fabs((dummy_mass[j]-dmp_mass)/dmp_mass) < 1e-5)
-                ramses_header_info.npart[RAMSESDMTYPE]++;
-            else
-                if (dummy_age[j] != 0.0)
-                    ramses_header_info.npart[RAMSESSTARTYPE]++;
-                else
-                ghoststars++;
-            */
-
-            // This appears to be true for all zoom-sims, ghosts stars seem to be a Horizon-AGN only thing
+        if (opt.iramsesghoststar)
+          for (j = 0; j < ramses_header_info.npartlocal; j++)
+          {
+            if (fabs((dummy_mass[j]-dmp_mass)/dmp_mass) < 1e-5) ramses_header_info.npart[RAMSESDMTYPE]++;
+            else if (dummy_age[j] != 0.0) ramses_header_info.npart[RAMSESSTARTYPE]++;
+            else ghoststars++;
+          }
+        else
+          for (j=0; j < ramses_header_info.npartlocal; j++)
+          {
+            // This appears to be true for all zoom-sims, ghosts stars seem to be a Horizon-A
             if (dummy_age[j] == 0) ramses_header_info.npart[RAMSESDMTYPE]++;
             else ramses_header_info.npart[RAMSESSTARTYPE]++;
-        }
+          }
+
         delete [] dummy_age;
         delete [] dummy_mass;
         Framses.close();
@@ -767,11 +766,9 @@ void ReadRamses(Options &opt, vector<Particle> &Part, const Int_t nbodies, Parti
         RAMSES_fortran_read(Fpartage[i],   agetempchunk);
         RAMSES_fortran_read(Fpartmet[i],   mettempchunk);
 
-        // RAMSES_fortran_read(Fpartid[i],idvalchunk); <-- This shouldnt be here
         for (int nn=0;nn<nchunk;nn++)
         {
-            //if (fabs((mtempchunk[nn]-dmp_mass)/dmp_mass) > 1e-5 && (agetempchunk[nn] == 0.0))
-            if (0)
+            if (opt.iramsesghoststar && ((fabs((mtempchunk[nn]-dmp_mass)/dmp_mass) > 1e-5) && (agetempchunk[nn] == 0.0)))
             {
               //  GHOST PARTIRCLE!!!
             }
@@ -795,18 +792,11 @@ void ReadRamses(Options &opt, vector<Particle> &Part, const Int_t nbodies, Parti
             mtemp=1.0;
 #endif
             ageval = agetempchunk[nn];
-/*
-            if (fabs((mtemp-dmp_mass)/dmp_mass) < 1e-5) typeval = DARKTYPE;
-            else typeval = STARTYPE;
-*/
-            if (ageval == 0) typeval = DARKTYPE;
-            else typeval = STARTYPE;
-            //cout << count2 << endl;
-/*
+
             if (ageval==0 && idval>0) typeval=DARKTYPE;
             else if (idval>0) typeval=STARTYPE;
             else typeval=BHTYPE;
-*/
+
 #ifdef USEMPI
             //determine processor this particle belongs on based on its spatial position
             ibuf=MPIGetParticlesProcessor(opt, xtemp[0],xtemp[1],xtemp[2]);
