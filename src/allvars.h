@@ -1285,68 +1285,110 @@ struct PropData
     ///\name properties of total object including DM, gas, stars, bh, etc
     //@{
     ///number of particles
-    Int_t num;
+    Int_t num = 0;
     ///number of particles in FOF envelop
-    Int_t gNFOF,gN6DFOF;
+    Int_t gNFOF = 0;
+    Int_t gN6DFOF = 0;
     ///centre of mass
-    Coordinate gcm, gcmvel;
+    Coordinate gcm;
+    Coordinate gcmvel;
     ///Position of most bound particle, and also of particle with min potential
     Coordinate gposmbp, gvelmbp, gposminpot, gvelminpot;
     ///\name physical properties regarding mass, size
     //@{
-    Double_t gmass,gsize,gMvir,gRvir,gRcm,gRmbp,gRminpot,gmaxvel,gRmaxvel,gMmaxvel,gRhalfmass,gMassTwiceRhalfmass;
-    Double_t gM200c,gR200c,gM200m,gR200m,gMFOF,gM6DFOF,gM500c,gR500c,gMBN98,gRBN98;
+    Double_t gmass = 0;
+    Double_t gsize = 0;
+    Double_t gMvir = 0;
+    Double_t gRvir = 0;
+    Double_t gRcm;
+    Double_t gRmbp = 0;
+    Double_t gRminpot;
+    Double_t gmaxvel = 0;
+    Double_t gRmaxvel = 0;
+    Double_t gMmaxvel = 0;
+    Double_t gRhalfmass = 0;
+    Double_t gMassTwiceRhalfmass = 0;
+    Double_t gM200c;
+    Double_t gR200c = 0;
+    Double_t gM200m;
+    Double_t gR200m = 0;
+    Double_t gMFOF = 0;
+    Double_t gM6DFOF = 0;
+    Double_t gM500c = 0;
+    Double_t gR500c = 0;
+    Double_t gMBN98 = 0;
+    Double_t gRBN98 = 0;
     //to store exclusive masses of halo ignoring substructure
-    Double_t gMvir_excl,gRvir_excl,gM200c_excl,gR200c_excl,gM200m_excl,gR200m_excl,gMBN98_excl,gRBN98_excl;
+    Double_t gMvir_excl;
+    Double_t gRvir_excl;
+    Double_t gM200c_excl = 0;
+    Double_t gR200c_excl = 0;
+    Double_t gM200m_excl = 0;
+    Double_t gR200m_excl = 0;
+    Double_t gMBN98_excl = 0;
+    Double_t gRBN98_excl = 0;
     //to store halfmass radii of overdensity masses
-    Double_t gRhalf200c,gRhalf200m,gRhalfBN98;
+    Double_t gRhalf200c = 0;
+    Double_t gRhalf200m = 0;
+    Double_t gRhalfBN98 = 0;
 
     //@}
     ///\name physical properties for shape/mass distribution
     //@{
     ///axis ratios
-    Double_t gq,gs;
+    Double_t gq = 1;
+    Double_t gs = 1;
     ///eigenvector
     Matrix geigvec;
     //@}
     ///\name physical properties for velocity
     //@{
     ///velocity dispersion
-    Double_t gsigma_v;
+    Double_t gsigma_v = 0;
     ///dispersion tensor
-    Matrix gveldisp;
+    Matrix gveldisp {0.};
     //@}
     ///physical properties for dynamical state
-    Double_t Efrac,Pot,T;
+    Double_t Efrac = 0;
+    Double_t Pot = 0;
+    Double_t T = 0;
     ///physical properties for angular momentum
     Coordinate gJ;
-    Coordinate gJ200m, gJ200c, gJBN98;
+    Coordinate gJ200m;
+    Coordinate gJ200c;
+    Coordinate gJBN98;
     ///physical properties for angular momentum exclusive
-    Coordinate gJ200m_excl, gJ200c_excl, gJBN98_excl;
+    Coordinate gJ200m_excl;
+    Coordinate gJ200c_excl;
+    Coordinate gJBN98_excl;
     ///Keep track of position of least unbound particle and most bound particle pid and minimum potential
-    Int_t iunbound,ibound, iminpot;
+    Int_t iunbound = 0;
+    Int_t ibound = 0;
+    Int_t iminpot = 0;
     ///Type of structure
     int stype;
     ///concentration (and related quantity used to calculate a concentration)
     Double_t cNFW, VmaxVvir2;
-    Double_t cNFW200c, cNFW200m, cNFWBN98;
-    /// if fitting mass profiles with generalized NFW
-    Double_t NFWfitrs, NFWfitalpha, NFWfitbeta;
+    Double_t cNFW200c = 0;
+    Double_t cNFW200m = 0;
+    Double_t cNFWBN98 = 0;
     ///Bullock & Peebles spin parameters
-    Double_t glambda_B,glambda_P;
+    Double_t glambda_B = 0;
     ///measure of rotational support
-    Double_t Krot;
+    Double_t Krot = 0;
     //@}
 
     ///\name halo properties within RVmax
     //@{
-    Double_t RV_q,RV_s;
-    Matrix RV_eigvec;
-    Double_t RV_sigma_v;
-    Matrix RV_veldisp;
+    Double_t RV_q = 1;
+    Double_t RV_s = 1;
+    Matrix RV_eigvec {0.};
+    Double_t RV_sigma_v = 0;
+    Matrix RV_veldisp {0.};
     Coordinate RV_J;
-    Double_t RV_lambda_B,RV_lambda_P;
-    Double_t RV_Krot;
+    Double_t RV_lambda_B = 0;
+    Double_t RV_lambda_P = 0;
+    Double_t RV_Krot = 0;
     //@}
 
     ///\name radial profiles
@@ -1380,33 +1422,55 @@ struct PropData
     ///\name gas specific quantities
     //@{
     ///number of particles
-    int n_gas;
+    int n_gas = 0;
     ///mass
-    Double_t M_gas, M_gas_rvmax, M_gas_30kpc, M_gas_50kpc, M_gas_500c;
+    Double_t M_gas = 0;
+    Double_t M_gas_rvmax = 0;
+    Double_t M_gas_30kpc = 0;
+    Double_t M_gas_50kpc = 0;
+    Double_t M_gas_500c;
     ///mass in spherical overdensities
-    Double_t M_200crit_gas, M_200mean_gas, M_BN98_gas;
+    Double_t M_200crit_gas = 0;
+    Double_t M_200mean_gas = 0;
+    Double_t M_BN98_gas = 0;
     ///mass in spherical overdensities inclusive of all masses
-    Double_t M_200crit_excl_gas, M_200mean_excl_gas, M_BN98_excl_gas;
+    Double_t M_200crit_excl_gas = 0;
+    Double_t M_200mean_excl_gas = 0;
+    Double_t M_BN98_excl_gas = 0;
     ///pos/vel info
-    Coordinate cm_gas,cmvel_gas;
+    Coordinate cm_gas;
+    Coordinate cmvel_gas;
     ///velocity/angular momentum info
-    Double_t Krot_gas;
+    Double_t Krot_gas = 0;
     Coordinate L_gas;
     ///physical properties for angular momentum (can be inclusive or exclusive )
-    Coordinate L_200crit_gas, L_200mean_gas, L_BN98_gas;
+    Coordinate L_200crit_gas;
+    Coordinate L_200mean_gas;
+    Coordinate L_BN98_gas;
     ///physical properties for angular momentum exclusiveto object
-    Coordinate L_200crit_excl_gas, L_200mean_excl_gas, L_BN98_excl_gas;
+    Coordinate L_200crit_excl_gas;
+    Coordinate L_200mean_excl_gas;
+    Coordinate L_BN98_excl_gas;
     //dispersion
-    Matrix veldisp_gas;
+    Matrix veldisp_gas {0.};
     ///morphology
-    Double_t MassTwiceRhalfmass_gas, Rhalfmass_gas, q_gas, s_gas;
-    Matrix eigvec_gas;
+    Double_t MassTwiceRhalfmass_gas = 0;
+    Double_t Rhalfmass_gas = 0;
+    Double_t q_gas = 1;
+    Double_t s_gas = 1;
+    Matrix eigvec_gas {1, 0, 0, 0, 1, 0, 0, 0, 1};
     ///mass weighted sum of temperature, metallicty, star formation rate
-    Double_t Temp_gas, Z_gas, SFR_gas;
+    Double_t Temp_gas = 0;
+    Double_t Z_gas = 0;
+    Double_t SFR_gas = 0;
     ///mean temperature,metallicty,star formation rate
-    Double_t Temp_mean_gas, Z_mean_gas, SFR_mean_gas;
+    Double_t Temp_mean_gas  = 0;
+    Double_t Z_mean_gas = 0;
+    Double_t SFR_mean_gas = 0;
     ///physical properties for dynamical state
-    Double_t Efrac_gas, Pot_gas, T_gas;
+    Double_t Efrac_gas = 0;
+    Double_t Pot_gas = 0;
+    Double_t T_gas = 0;
     //@}
 
     ///\name gas radial profiles
@@ -1436,28 +1500,47 @@ struct PropData
     ///\name star forming gas specific quantities
     //@{
     ///number of particles
-    int n_gas_sf;
+    int n_gas_sf = 0;
     ///mass
-    Double_t M_gas_sf, M_gas_sf_rvmax,M_gas_sf_30kpc,M_gas_sf_50kpc, M_gas_sf_500c;
+    Double_t M_gas_sf = 0;
+    Double_t M_gas_sf_rvmax = 0;
+    Double_t M_gas_sf_30kpc = 0;
+    Double_t M_gas_sf_50kpc = 0;
+    Double_t M_gas_sf_500c;
     ///mass in spherical overdensities
-    Double_t M_200crit_gas_sf, M_200mean_gas_sf, M_BN98_gas_sf;
+    Double_t M_200crit_gas_sf = 0;
+    Double_t M_200mean_gas_sf = 0;
+    Double_t M_BN98_gas_sf = 0;
     ///mass in spherical overdensities inclusive of all masses
-    Double_t M_200crit_excl_gas_sf, M_200mean_excl_gas_sf, M_BN98_excl_gas_sf;
+    Double_t M_200crit_excl_gas_sf = 0;
+    Double_t M_200mean_excl_gas_sf = 0;
+    Double_t M_BN98_excl_gas_sf = 0;
     ///velocity/angular momentum info
     Double_t Krot_gas_sf;
     Coordinate L_gas_sf;
     ///physical properties for angular momentum (can be inclusive or exclusive )
-    Coordinate L_200crit_gas_sf, L_200mean_gas_sf, L_BN98_gas_sf;
+    Coordinate L_200crit_gas_sf;
+    Coordinate L_200mean_gas_sf;
+    Coordinate L_BN98_gas_sf;
     ///physical properties for angular momentum exclusiveto object
-    Coordinate L_200crit_excl_gas_sf, L_200mean_excl_gas_sf, L_BN98_excl_gas_sf;
+    Coordinate L_200crit_excl_gas_sf;
+    Coordinate L_200mean_excl_gas_sf;
+    Coordinate L_BN98_excl_gas_sf;
     //dispersion
-    Double_t sigV_gas_sf;
+    Double_t sigV_gas_sf = 0;
     ///morphology
-    Double_t MassTwiceRhalfmass_gas_sf, Rhalfmass_gas_sf, q_gas_sf, s_gas_sf;
+    Double_t MassTwiceRhalfmass_gas_sf = 0;
+    Double_t Rhalfmass_gas_sf = 0;
+    Double_t q_gas_sf = 1;
+    Double_t s_gas_sf = 1;
     ///mass weighted sum of temperature, metallicty, star formation rate
-    Double_t Temp_gas_sf, Z_gas_sf, SFR_gas_sf;
+    Double_t Temp_gas_sf = 0;
+    Double_t Z_gas_sf = 0;
+    Double_t SFR_gas_sf;
     ///mean temperature,metallicty,star formation rate
-    Double_t Temp_mean_gas_sf, Z_mean_gas_sf, SFR_mean_gas_sf;
+    Double_t Temp_mean_gas_sf = 0;
+    Double_t Z_mean_gas_sf = 0;
+    Double_t SFR_mean_gas_sf;
     //@}
 
     ///\name gas star forming radial profiles
@@ -1485,28 +1568,45 @@ struct PropData
     ///\name star forming gas specific quantities
     //@{
     ///number of particles
-    int n_gas_nsf;
+    int n_gas_nsf = 0;
     ///mass
-    Double_t M_gas_nsf, M_gas_nsf_rvmax,M_gas_nsf_30kpc,M_gas_nsf_50kpc, M_gas_nsf_500c;
+    Double_t M_gas_nsf = 0;
+    Double_t M_gas_nsf_rvmax = 0;
+    Double_t M_gas_nsf_30kpc = 0;
+    Double_t M_gas_nsf_50kpc = 0;
+    Double_t M_gas_nsf_500c;
     ///mass in spherical overdensities
-    Double_t M_200crit_gas_nsf, M_200mean_gas_nsf, M_BN98_gas_nsf;
+    Double_t M_200crit_gas_nsf = 0;
+    Double_t M_200mean_gas_nsf = 0;
+    Double_t M_BN98_gas_nsf = 0;
     ///mass in spherical overdensities inclusive of all masses
-    Double_t M_200crit_excl_gas_nsf, M_200mean_excl_gas_nsf, M_BN98_excl_gas_nsf;
+    Double_t M_200crit_excl_gas_nsf = 0;
+    Double_t M_200mean_excl_gas_nsf = 0;
+    Double_t M_BN98_excl_gas_nsf = 0;
     ///velocity/angular momentum info
     Double_t Krot_gas_nsf;
     Coordinate L_gas_nsf;
     ///physical properties for angular momentum (can be inclusive or exclusive )
-    Coordinate L_200crit_gas_nsf, L_200mean_gas_nsf, L_BN98_gas_nsf;
+    Coordinate L_200crit_gas_nsf;
+    Coordinate L_200mean_gas_nsf;
+    Coordinate L_BN98_gas_nsf;
     ///physical properties for angular momentum exclusiveto object
-    Coordinate L_200crit_excl_gas_nsf, L_200mean_excl_gas_nsf, L_BN98_excl_gas_nsf;
+    Coordinate L_200crit_excl_gas_nsf;
+    Coordinate L_200mean_excl_gas_nsf;
+    Coordinate L_BN98_excl_gas_nsf;
     //dispersion
-    Double_t sigV_gas_nsf;
+    Double_t sigV_gas_nsf = 0;
     ///morphology
-    Double_t MassTwiceRhalfmass_gas_nsf, Rhalfmass_gas_nsf, q_gas_nsf, s_gas_nsf;
+    Double_t MassTwiceRhalfmass_gas_nsf = 0;
+    Double_t Rhalfmass_gas_nsf = 0;
+    Double_t q_gas_nsf = 1;
+    Double_t s_gas_nsf = 1;
     ///mass weighted sum of temperature, metallicty, star formation rate
-    Double_t Temp_gas_nsf, Z_gas_nsf;
+    Double_t Temp_gas_nsf = 0;
+    Double_t Z_gas_nsf = 0;
     ///mean temperature,metallicty,star formation rate
-    Double_t Temp_mean_gas_nsf, Z_mean_gas_nsf;
+    Double_t Temp_mean_gas_nsf = 0;
+    Double_t Z_mean_gas_nsf = 0;
     //@}
 
     ///\name gas star forming radial profiles
@@ -1539,12 +1639,12 @@ struct PropData
 #endif
 #endif
 #if (defined(GASON)) || (defined(GASON) && defined(SWIFTINTERFACE))
-    Double_t M_gas_highT;
-    Double_t Temp_mean_gas_highT;
-    Double_t Z_mean_gas_highT;
-    Double_t M_gas_highT_incl;
-    Double_t Temp_mean_gas_highT_incl;
-    Double_t Z_mean_gas_highT_incl;
+    Double_t M_gas_highT = 0;
+    Double_t Temp_mean_gas_highT = 0;
+    Double_t Z_mean_gas_highT = 0;
+    Double_t M_gas_highT_incl = 0;
+    Double_t Temp_mean_gas_highT_incl = 0;
+    Double_t Z_mean_gas_highT_incl = 0;
     vector<float> SO_mass_highT;
     vector<float> SO_Temp_mean_gas_highT;
     vector<float> SO_Z_mean_gas_highT;
@@ -1552,47 +1652,68 @@ struct PropData
 #endif
     ///\name inclusive masses computed for the FOF structures.
     //@{
-    Double_t M_tot_incl;
+    Double_t M_tot_incl = 0;
 #ifdef GASON 
-    Double_t M_gas_incl;
+    Double_t M_gas_incl = 0;
 #ifdef STARON
-    Double_t M_gas_nsf_incl, M_gas_sf_incl;
+    Double_t M_gas_nsf_incl = 0;
+    Double_t M_gas_sf_incl = 0;
 #endif
 #endif
 #ifdef STARON
-    Double_t M_star_incl;
+    Double_t M_star_incl = 0;
 #endif
 
 #ifdef STARON
     ///\name star specific quantities
     //@{
     ///number of particles
-    int n_star;
+    int n_star = 0;
     ///mass
-    Double_t M_star, M_star_rvmax, M_star_30kpc, M_star_50kpc, M_star_500c;
+    Double_t M_star = 0;
+    Double_t M_star_rvmax = 0;
+    Double_t M_star_30kpc = 0;
+    Double_t M_star_50kpc = 0;
+    Double_t M_star_500c = 0;
     ///mass in spherical overdensities
-    Double_t M_200crit_star, M_200mean_star, M_BN98_star;
+    Double_t M_200crit_star = 0;
+    Double_t M_200mean_star = 0;
+    Double_t M_BN98_star = 0;
     ///mass in spherical overdensities inclusive of all masses
-    Double_t M_200crit_excl_star, M_200mean_excl_star, M_BN98_excl_star;
+    Double_t M_200crit_excl_star = 0;
+    Double_t M_200mean_excl_star = 0;
+    Double_t M_BN98_excl_star = 0;
     ///pos/vel info
-    Coordinate cm_star,cmvel_star;
+    Coordinate cm_star;
+    Coordinate cmvel_star;
     ///velocity/angular momentum info
-    Double_t Krot_star;
+    Double_t Krot_star = 0;
     Coordinate L_star;
     ///physical properties for angular momentum (can be inclusive or exclusive )
-    Coordinate L_200crit_star, L_200mean_star, L_BN98_star;
+    Coordinate L_200crit_star;
+    Coordinate L_200mean_star;
+    Coordinate L_BN98_star;
     ///physical properties for angular momentum exclusiveto object
-    Coordinate L_200crit_excl_star, L_200mean_excl_star, L_BN98_excl_star;
-    Matrix veldisp_star;
+    Coordinate L_200crit_excl_star;
+    Coordinate L_200mean_excl_star;
+    Coordinate L_BN98_excl_star;
+    Matrix veldisp_star {0.};
     ///morphology
-    Double_t MassTwiceRhalfmass_star, Rhalfmass_star,q_star,s_star;
-    Matrix eigvec_star;
+    Double_t MassTwiceRhalfmass_star = 0;
+    Double_t Rhalfmass_star = 0;
+    Double_t q_star = 1;
+    Double_t s_star = 1;
+    Matrix eigvec_star {1, 0, 0, 0, 1, 0, 0, 0, 1};
     ///mean age,metallicty
-    Double_t t_star,Z_star;
+    Double_t t_star = 0;
+    Double_t Z_star = 0;
     ///mean age,metallicty
-    Double_t t_mean_star,Z_mean_star;
+    Double_t t_mean_star = 0;
+    Double_t Z_mean_star = 0;
     ///physical properties for dynamical state
-    Double_t Efrac_star,Pot_star,T_star;
+    Double_t Efrac_star = 0;
+    Double_t Pot_star = 0;
+    Double_t T_star = 0;
     //@}
 
 
@@ -1623,11 +1744,13 @@ struct PropData
     ///\name black hole specific quantities
     //@{
     ///number of BH
-    int n_bh;
+    int n_bh = 0;
     ///mass
-    Double_t M_bh, M_bh_mostmassive;
+    Double_t M_bh = 0;
+    Double_t M_bh_mostmassive = 0;
     ///mean accretion rate, metallicty
-    Double_t acc_bh, acc_bh_mostmassive;
+    Double_t acc_bh = 0;
+    Double_t acc_bh_mostmassive = 0;
 
     ///\name blackhole aperture/radial profiles
     //@{
@@ -1646,13 +1769,16 @@ struct PropData
     ///\name low resolution interloper particle specific quantities
     //@{
     ///number of interloper low res particles
-    int n_interloper;
+    int n_interloper = 0;
     ///mass
-    Double_t M_interloper;
+    Double_t M_interloper = 0;
     ///mass in spherical overdensities
     Double_t M_200crit_interloper, M_200mean_interloper, M_BN98_interloper;
     ///mass in spherical overdensities inclusive of all masses
-    Double_t M_200crit_excl_interloper, M_200mean_excl_interloper, M_BN98_excl_interloper;
+    /// TODO: These are not used anywhere, but still written to output files
+    Double_t M_200crit_excl_interloper = 0;
+    Double_t M_200mean_excl_interloper = 0;
+    Double_t M_BN98_excl_interloper = 0;
 
     vector<unsigned int> aperture_npart_interloper;
     vector<float> aperture_mass_interloper;
@@ -1686,7 +1812,7 @@ struct PropData
     vector<BHProperties> aperture_properties_bh;
 #endif
 #if defined(EXTRADMON)
-    Int_t n_dm;
+    Int_t n_dm = 0;
     ExtraDMProperties extradmprop;
     vector<ExtraDMProperties> aperture_properties_extra_dm;
 #endif
@@ -1697,327 +1823,7 @@ struct PropData
     string massunit, velocityunit, lengthunit, energyunit;
     //@}
 
-
-    PropData()
-    {
-        num=gNFOF=gN6DFOF=0;
-        gmass=gsize=gRmbp=gmaxvel=gRmaxvel=gRvir=gR200m=gR200c=gRhalfmass=gMassTwiceRhalfmass=Efrac=Pot=T=0.;
-        gMFOF=gM6DFOF=0;
-        gM500c=gR500c=0;
-        gMBN98=gRBN98=0;
-        gRhalf200c = gRhalf200m = gRhalfBN98 = 0.;
-        cNFW200c = cNFW200c = cNFWBN98 = 0;
-        gcm[0]=gcm[1]=gcm[2]=gcmvel[0]=gcmvel[1]=gcmvel[2]=0.;
-        gJ[0]=gJ[1]=gJ[2]=0;
-        gJ200m[0]=gJ200m[1]=gJ200m[2]=0;
-        gJ200c[0]=gJ200c[1]=gJ200c[2]=0;
-        gJBN98[0]=gJBN98[1]=gJBN98[2]=0;
-        gveldisp=Matrix(0.);
-        gq=gs=1.0;
-        Krot=0.;
-
-        gM200m_excl=gM200c_excl=gMBN98_excl=0;
-        gR200m_excl=gR200c_excl=gRBN98_excl=0;
-        gJ200m_excl[0]=gJ200m_excl[1]=gJ200m_excl[2]=0;
-        gJ200c_excl[0]=gJ200c_excl[1]=gJ200c_excl[2]=0;
-        gJBN98_excl[0]=gJBN98_excl[1]=gJBN98_excl[2]=0;
-
-        RV_sigma_v=0;
-        RV_q=RV_s=1.;
-        RV_J[0]=RV_J[1]=RV_J[2]=0;
-        RV_veldisp=Matrix(0.);
-        RV_eigvec=Matrix(0.);
-        RV_lambda_B=RV_lambda_P=RV_Krot=0;
-
-#ifdef GASON
-        M_gas_rvmax=M_gas_30kpc=M_gas_50kpc=0;
-        n_gas=M_gas=Efrac_gas=0;
-        cm_gas[0]=cm_gas[1]=cm_gas[2]=cmvel_gas[0]=cmvel_gas[1]=cmvel_gas[2]=0.;
-        L_gas[0]=L_gas[1]=L_gas[2]=0;
-        q_gas=s_gas=1.0;
-        MassTwiceRhalfmass_gas=Rhalfmass_gas=0;
-        eigvec_gas=Matrix(1,0,0,0,1,0,0,0,1);
-        Temp_gas=Z_gas=SFR_gas=0.0;
-        Temp_mean_gas=Z_mean_gas=SFR_mean_gas=0.0;
-        veldisp_gas=Matrix(0.);
-        Krot_gas=T_gas=Pot_gas=0;
-
-        M_200mean_gas=M_200crit_gas=M_BN98_gas=0;
-        M_200mean_excl_gas=M_200crit_excl_gas=M_BN98_excl_gas=0;
-        L_200crit_gas[0]=L_200crit_gas[1]=L_200crit_gas[2]=0;
-        L_200mean_gas[0]=L_200mean_gas[1]=L_200mean_gas[2]=0;
-        L_BN98_gas[0]=L_BN98_gas[1]=L_BN98_gas[2]=0;
-        L_200crit_excl_gas[0]=L_200crit_excl_gas[1]=L_200crit_excl_gas[2]=0;
-        L_200mean_excl_gas[0]=L_200mean_excl_gas[1]=L_200mean_excl_gas[2]=0;
-        L_BN98_excl_gas[0]=L_BN98_excl_gas[1]=L_BN98_excl_gas[2]=0;
-#ifdef STARON
-        n_gas_sf = n_gas_nsf = 0;
-        M_gas_sf=M_gas_sf_rvmax=M_gas_sf_30kpc=M_gas_sf_50kpc=0;
-        L_gas_sf[0]=L_gas_sf[1]=L_gas_sf[2]=0;
-        q_gas_sf=s_gas_sf=1.0;
-        MassTwiceRhalfmass_gas_sf=Rhalfmass_gas_sf=0;
-        Temp_gas_sf=Z_gas_sf=0.0;
-        Temp_mean_gas_sf=Z_mean_gas_sf=0.0;
-        sigV_gas_sf=0;
-
-        M_200mean_gas_sf=M_200crit_gas_sf=M_BN98_gas_sf=0;
-        M_200mean_excl_gas_sf=M_200crit_excl_gas_sf=M_BN98_excl_gas_sf=0;
-        L_200crit_gas_sf[0]=L_200crit_gas_sf[1]=L_200crit_gas_sf[2]=0;
-        L_200mean_gas_sf[0]=L_200mean_gas_sf[1]=L_200mean_gas_sf[2]=0;
-        L_BN98_gas_sf[0]=L_BN98_gas_sf[1]=L_BN98_gas_sf[2]=0;
-        L_200crit_excl_gas_sf[0]=L_200crit_excl_gas_sf[1]=L_200crit_excl_gas_sf[2]=0;
-        L_200mean_excl_gas_sf[0]=L_200mean_excl_gas_sf[1]=L_200mean_excl_gas_sf[2]=0;
-        L_BN98_excl_gas_sf[0]=L_BN98_excl_gas_sf[1]=L_BN98_excl_gas_sf[2]=0;
-
-        M_gas_nsf=M_gas_nsf_rvmax=M_gas_nsf_30kpc=M_gas_nsf_50kpc=0;
-        L_gas_nsf[0]=L_gas_nsf[1]=L_gas_nsf[2]=0;
-        q_gas_nsf=s_gas_nsf=1.0;
-        MassTwiceRhalfmass_gas_nsf=Rhalfmass_gas_nsf=0;
-        Temp_gas_nsf=Z_gas_nsf=0.0;
-        Temp_mean_gas_nsf=Z_mean_gas_nsf=0.0;
-        sigV_gas_nsf=0;
-        M_200mean_gas_nsf=M_200crit_gas_nsf=M_BN98_gas_nsf=0;
-        M_200mean_excl_gas_nsf=M_200crit_excl_gas_nsf=M_BN98_excl_gas_nsf=0;
-        L_200crit_gas_nsf[0]=L_200crit_gas_nsf[1]=L_200crit_gas_nsf[2]=0;
-        L_200mean_gas_nsf[0]=L_200mean_gas_nsf[1]=L_200mean_gas_nsf[2]=0;
-        L_BN98_gas_nsf[0]=L_BN98_gas_nsf[1]=L_BN98_gas_nsf[2]=0;
-        L_200crit_excl_gas_nsf[0]=L_200crit_excl_gas_nsf[1]=L_200crit_excl_gas_nsf[2]=0;
-        L_200mean_excl_gas_nsf[0]=L_200mean_excl_gas_nsf[1]=L_200mean_excl_gas_nsf[2]=0;
-        L_BN98_excl_gas_nsf[0]=L_BN98_excl_gas_nsf[1]=L_BN98_excl_gas_nsf[2]=0;
-
-
-#endif
-#endif
-#if (defined(GASON)) || (defined(GASON) && defined(SWIFTINTERFACE))
-	M_gas_highT=0;
-	Temp_mean_gas_highT=0;
-	Z_mean_gas_highT=0;
-	M_gas_highT_incl=0;
-	Temp_mean_gas_highT_incl=0;
-	Z_mean_gas_highT_incl=0;
-#endif
-	M_tot_incl=0;
-#ifdef GASON
-        M_gas_incl=0;
-#ifdef STARON
-	M_gas_nsf_incl=M_gas_sf_incl=0;
-#endif
-#endif
-#ifdef STARON	
-	M_star_incl=0;
-#endif
-#ifdef STARON
-        M_star_rvmax=M_star_30kpc=M_star_50kpc=0;
-        n_star=M_star=Efrac_star=0;
-        cm_star[0]=cm_star[1]=cm_star[2]=cmvel_star[0]=cmvel_star[1]=cmvel_star[2]=0.;
-        L_star[0]=L_star[1]=L_star[2]=0;
-        q_star=s_star=1.0;
-        MassTwiceRhalfmass_star=Rhalfmass_star=0;
-        eigvec_star=Matrix(1,0,0,0,1,0,0,0,1);
-        t_star=Z_star=0.;
-        t_mean_star=Z_mean_star=0.;
-        veldisp_star=Matrix(0.);
-        Krot_star=T_star=Pot_star=0;
-
-        M_200mean_star=M_200crit_star=M_BN98_star=0;
-        M_200mean_excl_star=M_200crit_excl_star=M_BN98_excl_star=0;
-        L_200crit_star[0]=L_200crit_star[1]=L_200crit_star[2]=0;
-        L_200mean_star[0]=L_200mean_star[1]=L_200mean_star[2]=0;
-        L_BN98_star[0]=L_BN98_star[1]=L_BN98_star[2]=0;
-        L_200crit_excl_star[0]=L_200crit_excl_star[1]=L_200crit_excl_star[2]=0;
-        L_200mean_excl_star[0]=L_200mean_excl_star[1]=L_200mean_excl_star[2]=0;
-        L_BN98_excl_star[0]=L_BN98_excl_star[1]=L_BN98_excl_star[2]=0;
-#endif
-#ifdef BHON
-        n_bh=M_bh=0;
-        M_bh_mostmassive=0;
-        acc_bh=0;
-        acc_bh_mostmassive=0;
-#endif
-#ifdef HIGHRES
-        n_interloper=M_interloper=0;
-#endif
-#ifdef EXTRADMON
-        n_dm = 0;
-#endif
-    }
-    ///equals operator, useful if want inclusive information before substructure search
-    PropData& operator=(const PropData &p) = default;
-    /*
-    PropData& operator=(const PropData &p) {
-        num=p.num;
-        gcm=p.gcm;gcmvel=p.gcmvel;
-        gposmbp=p.gposmbp;gvelmbp=p.gvelmbp;
-        gposminpot=p.gposminpot;gvelminpot=p.gvelminpot;
-        gmass=p.gmass;gsize=p.gsize;
-        gMvir=p.gMvir;gRvir=p.gRvir;gRmbp=p.gRmbp;
-        gmaxvel=gmaxvel=p.gmaxvel;gRmaxvel=p.gRmaxvel;gMmaxvel=p.gMmaxvel;
-        gM200c=p.gM200c;gR200c=p.gR200c;
-        gM200m=p.gM200m;gR200m=p.gR200m;
-        gM500c=p.gM500c;gR500c=p.gR500c;
-        gMBN98=p.gMBN98;gRBN98=p.gRBN98;
-        gNFOF=p.gNFOF;
-        gMFOF=p.gMFOF;
-
-        gM200c_excl=p.gM200c_excl;gR200c_excl=p.gR200c_excl;
-        gM200m_excl=p.gM200m_excl;gR200m_excl=p.gR200m_excl;
-        gMBN98_excl=p.gMBN98_excl;gRBN98_excl=p.gRBN98_excl;
-        gJ=p.gJ;
-        gJ200c=p.gJ200c;
-        gJ200m=p.gJ200m;
-        gJBN98=p.gJBN98;
-        gJ200c_excl=p.gJ200c_excl;
-        gJ200m_excl=p.gJ200m_excl;
-        gJBN98_excl=p.gJBN98_excl;
-
-        ///expand to copy all the gas, star, bh, stuff
-#ifdef GASON
-        M_200mean_gas=p.M_200mean_gas;
-        M_200crit_gas=p.M_200crit_gas;
-        M_BN98_gas=p.M_BN98_gas;
-        M_200mean_excl_gas=p.M_200mean_excl_gas;
-        M_200crit_excl_gas=p.M_200crit_excl_gas;
-        M_BN98_excl_gas=p.M_BN98_excl_gas;
-        L_200mean_gas=p.L_200mean_gas;
-        L_200crit_gas=p.L_200crit_gas;
-        L_BN98_gas=p.L_BN98_gas;
-        L_200mean_excl_gas=p.L_200mean_excl_gas;
-        L_200crit_excl_gas=p.L_200crit_excl_gas;
-        L_BN98_excl_gas=p.L_BN98_excl_gas;
-#ifdef STARON
-        M_200mean_gas_sf=p.M_200mean_gas_sf;
-        M_200crit_gas_sf=p.M_200crit_gas_sf;
-        M_BN98_gas_sf=p.M_BN98_gas_sf;
-        M_200mean_excl_gas_sf=p.M_200mean_excl_gas_sf;
-        M_200crit_excl_gas_sf=p.M_200crit_excl_gas_sf;
-        M_BN98_excl_gas_sf=p.M_BN98_excl_gas_sf;
-        L_200mean_gas_sf=p.L_200mean_gas_sf;
-        L_200crit_gas_sf=p.L_200crit_gas_sf;
-        L_BN98_gas_sf=p.L_BN98_gas_sf;
-        L_200mean_excl_gas_sf=p.L_200mean_excl_gas_sf;
-        L_200crit_excl_gas_sf=p.L_200crit_excl_gas_sf;
-        L_BN98_excl_gas_sf=p.L_BN98_excl_gas_sf;
-
-        M_200mean_gas_nsf=p.M_200mean_gas_nsf;
-        M_200crit_gas_nsf=p.M_200crit_gas_nsf;
-        M_BN98_gas_nsf=p.M_BN98_gas_nsf;
-        M_200mean_excl_gas_nsf=p.M_200mean_excl_gas_nsf;
-        M_200crit_excl_gas_nsf=p.M_200crit_excl_gas_nsf;
-        M_BN98_excl_gas_nsf=p.M_BN98_excl_gas_nsf;
-        L_200mean_gas_nsf=p.L_200mean_gas_nsf;
-        L_200crit_gas_nsf=p.L_200crit_gas_nsf;
-        L_BN98_gas_nsf=p.L_BN98_gas_nsf;
-        L_200mean_excl_gas_nsf=p.L_200mean_excl_gas_nsf;
-        L_200crit_excl_gas_nsf=p.L_200crit_excl_gas_nsf;
-        L_BN98_excl_gas_nsf=p.L_BN98_excl_gas_nsf;
-#endif
-#endif
-#ifdef STARON
-        M_200mean_star=p.M_200mean_star;
-        M_200crit_star=p.M_200crit_star;
-        M_BN98_star=p.M_BN98_star;
-        M_200mean_excl_star=p.M_200mean_excl_star;
-        M_200crit_excl_star=p.M_200crit_excl_star;
-        M_BN98_excl_star=p.M_BN98_excl_star;
-        L_200mean_star=p.L_200mean_star;
-        L_200crit_star=p.L_200crit_star;
-        L_BN98_star=p.L_BN98_star;
-        L_200mean_excl_star=p.L_200mean_excl_star;
-        L_200crit_excl_star=p.L_200crit_excl_star;
-        L_BN98_excl_star=p.L_BN98_excl_star;
-#endif
-        aperture_npart=p.aperture_npart;
-        aperture_mass=p.aperture_mass;
-        aperture_veldisp=p.aperture_veldisp;
-        aperture_vrdisp=p.aperture_vrdisp;
-        aperture_rhalfmass=p.aperture_rhalfmass;
-#if defined(GASON) || defined(STARON) || defined(BHON)
-        aperture_npart_dm=p.aperture_npart_dm;
-        aperture_mass_dm=p.aperture_mass_dm;
-        aperture_veldisp_dm=p.aperture_veldisp_dm;
-        aperture_vrdisp_dm=p.aperture_vrdisp_dm;
-        aperture_rhalfmass_dm=p.aperture_rhalfmass_dm;
-        #endif
-#ifdef GASON
-        aperture_npart_gas=p.aperture_npart_gas;
-        aperture_mass_gas=p.aperture_mass_gas;
-        aperture_veldisp_gas=p.aperture_veldisp_gas;
-        aperture_rhalfmass_gas=p.aperture_rhalfmass_gas;
-#ifdef STARON
-        aperture_SFR_gas=p.aperture_SFR_gas;
-        aperture_Z_gas=p.aperture_Z_gas;
-        aperture_npart_gas_sf=p.aperture_npart_gas_sf;
-        aperture_npart_gas_nsf=p.aperture_npart_gas_nsf;
-        aperture_mass_gas_sf=p.aperture_mass_gas_sf;
-        aperture_mass_gas_nsf=p.aperture_mass_gas_nsf;
-        aperture_veldisp_gas_sf=p.aperture_veldisp_gas_sf;
-        aperture_veldisp_gas_nsf=p.aperture_veldisp_gas_nsf;
-        aperture_vrdisp_gas_sf=p.aperture_vrdisp_gas_sf;
-        aperture_vrdisp_gas_nsf=p.aperture_vrdisp_gas_nsf;
-        aperture_rhalfmass_gas_sf=p.aperture_rhalfmass_gas_sf;
-        aperture_rhalfmass_gas_nsf=p.aperture_rhalfmass_gas_nsf;
-        aperture_Z_gas_sf=p.aperture_Z_gas_sf;
-        aperture_Z_gas_nsf=p.aperture_Z_gas_nsf;
-#endif
-#endif
-#ifdef STARON
-        aperture_npart_star=p.aperture_npart_star;
-        aperture_mass_star=p.aperture_mass_star;
-        aperture_veldisp_star=p.aperture_veldisp_star;
-        aperture_vrdisp_star=p.aperture_vrdisp_star;
-        aperture_rhalfmass_star=p.aperture_rhalfmass_star;
-        aperture_Z_star=p.aperture_Z_star;
-#endif
-        aperture_mass_proj=p.aperture_mass_proj;
-        aperture_rhalfmass_proj=p.aperture_rhalfmass_proj;
-#ifdef GASON
-        aperture_mass_proj_gas=p.aperture_mass_proj_gas;
-        aperture_rhalfmass_proj_gas=p.aperture_rhalfmass_proj_gas;
-#ifdef STARON
-        aperture_SFR_proj_gas=p.aperture_SFR_proj_gas;
-        aperture_Z_proj_gas=p.aperture_Z_proj_gas;
-        aperture_mass_proj_gas_sf=p.aperture_mass_proj_gas_sf;
-        aperture_mass_proj_gas_nsf=p.aperture_mass_proj_gas_nsf;
-        aperture_rhalfmass_proj_gas_sf=p.aperture_rhalfmass_proj_gas_sf;
-        aperture_rhalfmass_proj_gas_nsf=p.aperture_rhalfmass_proj_gas_nsf;
-        aperture_Z_proj_gas_sf=p.aperture_Z_proj_gas_sf;
-        aperture_Z_proj_gas_nsf=p.aperture_Z_proj_gas_nsf;
-#endif
-#endif
-#ifdef STARON
-        aperture_mass_proj_star=p.aperture_mass_proj_star;
-        aperture_rhalfmass_proj_star=p.aperture_rhalfmass_proj_star;
-        aperture_Z_proj_star=p.aperture_Z_proj_star;
-#endif
-        profile_npart=p.profile_npart;
-        profile_mass=p.profile_mass;
-        profile_npart_inclusive=p.profile_npart_inclusive;
-        profile_mass_inclusive=p.profile_mass_inclusive;
-#ifdef GASON
-        profile_npart_gas=p.profile_npart_gas;
-        profile_mass_gas=p.profile_mass_gas;
-        profile_npart_inclusive_gas=p.profile_npart_inclusive_gas;
-        profile_mass_inclusive_gas=p.profile_mass_inclusive_gas;
-#ifdef STARON
-        profile_npart_gas_sf=p.profile_npart_gas_sf;
-        profile_mass_gas_sf=p.profile_mass_gas_sf;
-        profile_npart_inclusive_gas_sf=p.profile_npart_inclusive_gas_sf;
-        profile_mass_inclusive_gas_sf=p.profile_mass_inclusive_gas_sf;
-        profile_npart_gas_nsf=p.profile_npart_gas_nsf;
-        profile_mass_gas_nsf=p.profile_mass_gas_nsf;
-        profile_npart_inclusive_gas_nsf=p.profile_npart_inclusive_gas_nsf;
-        profile_mass_inclusive_gas_nsf=p.profile_mass_inclusive_gas_nsf;
-#endif
-#endif
-#ifdef STARON
-        profile_npart_star=p.profile_npart_star;
-        profile_mass_star=p.profile_mass_star;
-        profile_npart_inclusive_star=p.profile_npart_inclusive_star;
-        profile_mass_inclusive_star=p.profile_mass_inclusive_star;
-#endif
-        return *this;
-    }
-    */
+    PropData() = default;
 
     //allocate memory for profiles
     void Allocate(Options &opt) {
