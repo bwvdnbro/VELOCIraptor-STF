@@ -88,6 +88,7 @@ void show_version_info(int argc, char *argv[])
 
 int main(int argc,char **argv)
 {
+    std::cout << "sizeof(PropData): " << vr::memory_amount(sizeof(PropData)) << std::endl;
 #ifdef USEMPI
     //start MPI
 #ifdef USEOPENMP
