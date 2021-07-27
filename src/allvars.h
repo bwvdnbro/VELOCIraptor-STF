@@ -721,6 +721,8 @@ struct Options
     Double_t SphericalOverdensitySeachFac = 2.5;
     ///if want to the particle IDs that are within the SO overdensity of a halo
     int iSphericalOverdensityPartList = 0;
+    /// if want SO particle IDs, overdensity value at which the list is trimmed
+    Double_t SphericalOverdensityOutputCriticalDensity = 100.;
     /// if want to include more than just field objects (halos) in full SO calculations
     int SphericalOverdensitySeachMaxStructLevel = HALOSTYPE;
     /// flag to store whether SO calculations need extra properties

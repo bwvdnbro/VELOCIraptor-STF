@@ -3756,11 +3756,14 @@ private(i,j,k,taggedparts,radii,masses,indices,posref,posparts,velparts,typepart
 #endif
             double_t maxSOradius = 0.;
             for(auto iso=0; iso < opt.SOnum; ++iso){
-                maxSOradius = std::max(maxSOradius, pdata[i].SO_radius[iso]);
+                if(opt.SOthresholds_values_crit[iso] == opt.SphericalOverdensityOutputCriticalDensity){
+                    maxSOradius = pdata[i].SO_radius[iso];
+                    break;
+                }
             }
             Int_t real_llindex = 0;
             for (j=0;j<llindex;j++) {
-                if(radii[indices[j]] < maxSOradius){
+                if(radii[indices[j]] <= maxSOradius){
                     SOpartlist[i - 1][real_llindex]=SOpids[indices[j]];
                     ++real_llindex;
                 }
@@ -3769,7 +3772,7 @@ private(i,j,k,taggedparts,radii,masses,indices,posref,posparts,velparts,typepart
 #if defined(GASON) || defined(STARON) || defined(BHON) || defined(HIGHRES)
             real_llindex = 0;
             for (j=0;j<llindex;j++){
-                if(radii[indices[j]] < maxSOradius){
+                if(radii[indices[j]] <= maxSOradius){
                     SOparttypelist[i - 1][real_llindex]=typeparts[indices[j]];
                     ++real_llindex;
                 }

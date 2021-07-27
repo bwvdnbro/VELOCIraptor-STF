@@ -1120,6 +1120,15 @@ void GetParamFile(Options &opt)
                             dataline.erase(0, pos + delimiter.length());
                         }
                     }
+                    else if (strcmp(tbuff, "Overdensity_output_maximum_radius_in_critical_density")==0) {
+                        opt.SphericalOverdensityOutputCriticalDensity = atof(vbuff);
+                        // if this is define, then make sure the SO calculations are check to contain this value, otherwise modify it to contain them.
+                        auto iter = std::find(opt.SOthresholds_values_crit.begin(), opt.SOthresholds_values_crit.end(), opt.SphericalOverdensityOutputCriticalDensity);
+                        if(iter == opt.SOthresholds_values_crit.end()){
+                            opt.SOthresholds_values_crit.push_back(opt.SphericalOverdensityOutputCriticalDensity);
+                            opt.SOnum = opt.SOnum + 1;
+                        }
+                    }
                     //other options
                     else if (strcmp(tbuff, "Verbose")==0)
                         opt.iverbose = atoi(vbuff);
@@ -2503,6 +2512,7 @@ ConfigInfo::ConfigInfo(Options &opt){
     }
     AddEntry("Number_of_overdensities", opt.SOnum);
     AddEntry("Overdensity_values_in_critical_density", opt.SOthresholds_values_crit);
+    AddEntry("Overdensity_output_maximum_radius_in_critical_density", opt.SphericalOverdensityOutputCriticalDensity);
     AddEntry("Spherical_overdenisty_calculation_limited_to_structure_types", (opt.SphericalOverdensitySeachMaxStructLevel-HALOSTYPE)/HALOCORESTYPE);
 
     //try removing index that is now stored in
